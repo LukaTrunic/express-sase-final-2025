@@ -5,13 +5,16 @@ import { BookRoute } from './routes/book.route'
 import { configDotenv } from 'dotenv'
 import { AppDataSource } from './db'
 import { AuthorRoute } from './routes/author.route'
+import { UserRoute } from './routes/user.route'
 
 const app = express()
+app.use(express.json()) //olny accept json
 app.use(cors())
 app.use(morgan('tiny'))
 
 app.use('/api/books', BookRoute)
 app.use('/api/author', AuthorRoute)
+app.use('/api/user', UserRoute)
 
 // app.get('*', (req, res) => {
 //     res.status(404).json({
