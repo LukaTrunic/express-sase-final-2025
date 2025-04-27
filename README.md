@@ -1,6 +1,7 @@
 # express-sase-final-2025
  A school project for "Security Aspects in Software Engineering" course (BACKEND)
 
+```
 bun install
 bun add express
 bun add cors
@@ -19,6 +20,7 @@ bun add --dev @types/express
 bun add --dev @types/jsonwebtoken
 
 bunx typeorm-model-generator
+```
 
 `.env` example:
 ```
