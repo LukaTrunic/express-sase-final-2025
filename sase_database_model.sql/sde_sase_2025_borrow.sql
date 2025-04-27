@@ -27,11 +27,10 @@ CREATE TABLE `borrow` (
   `book_id` int unsigned NOT NULL,
   `author_id` int unsigned NOT NULL,
   `user_id` int unsigned NOT NULL,
-  `returned` tinyint unsigned NOT NULL,
-  `borrow_at` datetime NOT NULL,
-  `due_at` datetime NOT NULL,
-  `returned_at` datetime NOT NULL,
-  `created_at` datetime NOT NULL,
+  `borrow_at` datetime DEFAULT NULL,
+  `due_at` datetime DEFAULT NULL,
+  `returned_at` datetime DEFAULT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime DEFAULT NULL,
   `deleted_at` datetime DEFAULT NULL,
   PRIMARY KEY (`borrow_id`),
@@ -39,7 +38,7 @@ CREATE TABLE `borrow` (
   KEY `fk_borrow_user_idx` (`user_id`),
   CONSTRAINT `fk_borrow_author` FOREIGN KEY (`author_id`) REFERENCES `author` (`author_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_borrow_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -48,6 +47,7 @@ CREATE TABLE `borrow` (
 
 LOCK TABLES `borrow` WRITE;
 /*!40000 ALTER TABLE `borrow` DISABLE KEYS */;
+INSERT INTO `borrow` VALUES (1,84,1,1,NULL,NULL,NULL,'2025-04-27 22:32:18',NULL,NULL),(2,1342,3,1,NULL,NULL,NULL,'2025-04-27 22:33:44',NULL,NULL),(3,76,2,1,NULL,NULL,NULL,'2025-04-27 22:33:44',NULL,NULL),(4,844,7,2,NULL,NULL,NULL,'2025-04-27 23:24:48',NULL,NULL);
 /*!40000 ALTER TABLE `borrow` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -60,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-27 15:45:56
+-- Dump completed on 2025-04-27 23:48:23
