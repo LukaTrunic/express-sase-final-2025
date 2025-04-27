@@ -17,3 +17,5 @@ bun add --dev @types/cors
 bun add --dev @types/bcrypt
 bun add --dev @types/express
 bun add --dev @types/jsonwebtoken
+
+bunx typeorm-model-generator
