@@ -4,9 +4,10 @@ import { sendError } from "../utils"
 
 export const BorrowRoute = Router()
 
-BorrowRoute.get('/', async (req, res) => {
+BorrowRoute.get('/', async (req: any, res) => {
     try {
-        res.json(await BorrowService.getBorrow())
+        console.log(req.user)
+        res.json(await BorrowService.getBorrowsByUserId(req.user.id))
     } catch (e) {
         console.log(e)
         sendError(res, e)

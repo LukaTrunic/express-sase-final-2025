@@ -24,13 +24,13 @@ export class BookService {
         return await client.get(`/books/${id}`);
     }
 
-    // static async getBooksByIds(ids: number[]) {
-    //     return await client.request({
-    //         url: '/books',
-    //         method: 'post',
-    //         data: ids
-    //     });
-    // }
+    static async getBooksByIds(ids: number[]) {
+        return await client.request({
+            url: '/books',
+            method: 'post',
+            data: ids
+        });
+    }
 }
 
 
