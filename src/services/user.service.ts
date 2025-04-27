@@ -35,7 +35,7 @@ export class UserService {
 
   static async verifyToken(req: any, res: Response, next: Function) {
     // middleware
-    const whitelist = ['/api/user/login', '/api/user/register'];
+    const whitelist = ['/api/user/login', '/api/user/refresh', '/api/user/register'];
 
     if (whitelist.includes(req.path)) {
       next();
@@ -55,7 +55,7 @@ export class UserService {
 
     jwt.verify(token, tokenSecret!, (err: any, user: any) => {
       if (err) {
-        res.status(401).json({
+        res.status(403).json({
           message: "INVALID_TOKEN",
           timestamp: new Date(),
         });
