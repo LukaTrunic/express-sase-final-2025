@@ -7,7 +7,7 @@ export const BorrowRoute = Router()
 BorrowRoute.get('/', async (req: any, res) => {
     try {
         console.log(req.user)
-        res.json(await BorrowService.getBorrowsByUserId(req.user.id))
+        res.json(await BorrowService.getBorrows(req.user.id))
     } catch (e) {
         console.log(e)
         sendError(res, e)
