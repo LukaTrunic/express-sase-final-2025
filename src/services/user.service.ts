@@ -2,9 +2,10 @@ import { IsNull } from "typeorm";
 import { AppDataSource } from "../db";
 import { User } from "../entities/User";
 import type { LoginModel } from "../models/login.model";
-import type { Response } from 'express'
+import type { Response } from "express";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
+import type { RegisterModel } from "../models/register.model";
 
 const repo = AppDataSource.getRepository(User);
 const tokenSecret = process.env.JWT_SECRET;
@@ -24,44 +25,78 @@ export class UserService {
 
       return {
         name: user?.email,
-        access: jwt.sign(payload, tokenSecret, { expiresIn: accessTTL }),
-        refresh: jwt.sign(payload, tokenSecret, { expiresIn: refreshTTL }),
+        access: jwt.sign(payload, tokenSecret!, { expiresIn: accessTTL }),
+        refresh: jwt.sign(payload, tokenSecret!, { expiresIn: refreshTTL }),
       };
     }
 
-    throw new Error("BAD_CREDENTIALS")
+    throw new Error("BAD_CREDENTIALS");
   }
 
-  static async verifyToken(req: any, res: Response, next: Function) { // middleware
-    const whitelist = ['/api/user/login']
+  static async verifyToken(req: any, res: Response, next: Function) {
+    // middleware
+    const whitelist = ['/api/user/login', '/api/user/register'];
 
     if (whitelist.includes(req.path)) {
-        next()
-        return
+      next();
+      return;
     }
 
-    const authHeader = req.headers['authorization']
-    const token = authHeader && authHeader.split(' ')[1]
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
 
-    if(token == undefined) {
+    if (token == undefined) {
+      res.status(401).json({
+        message: "NO_TOKEN_FOUND",
+        timestamp: new Date(),
+      });
+      return;
+    }
+
+    jwt.verify(token, tokenSecret!, (err: any, user: any) => {
+      if (err) {
         res.status(401).json({
-            message: 'NO_TOKEN_FOUND',
-            timestamp: new Date()
-        })
-        return
-    }
+          message: "INVALID_TOKEN",
+          timestamp: new Date(),
+        });
+        return;
+      }
 
-    jwt.verify(token, tokenSecret, (err:any, user: any) => {
-        if(err) {
-            res.status(401).json({
-                message: 'INVALID_TOKEN',
-                timestamp: new Date()
-            })
-            return
-        }
+      req.user = user;
+      next();
+    });
+  }
 
-        req.user = user
-        next()
+  static async refreshToken(token: string) {
+    const decoded: any = jwt.verify(token, tokenSecret!);
+    const user = await this.getUserByEmail(decoded.email);
+
+    const payload = {
+      id: user?.userId,
+      email: user?.email,
+    };
+
+    return {
+      name: user?.email,
+      access: jwt.sign(payload, tokenSecret, { expiresIn: accessTTL }),
+      refresh: token,
+    };
+  }
+
+  static async register(model: RegisterModel) {
+    const data = await repo.existsBy({
+        email: model.email,
+        deletedAt: IsNull()
+    });
+
+    if(data)
+        throw new Error("USER_EXISTS")
+
+    const hashed = await bcryptjs.hash(model.password, 12)
+    await repo.save({
+        email: model.email,
+        password: hashed,
+        name: model.name
     })
   }
 
@@ -73,8 +108,7 @@ export class UserService {
       },
     });
 
-    if (data == null) 
-        throw new Error("USER_NOT_FOUND");
+    if (data == null) throw new Error("USER_NOT_FOUND");
 
     return data;
   }
