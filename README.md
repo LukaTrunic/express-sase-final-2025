@@ -19,3 +19,16 @@ bun add --dev @types/express
 bun add --dev @types/jsonwebtoken
 
 bunx typeorm-model-generator
+
+`.env` example:
+```
+SERVER_PORT = 5000
+DATABASE_HOST = localhost
+DATABASE_PORT = 3306
+DATABASE_USER = root
+DATABASE_PASSWORD = root
+DATABASE_NAME = sde_sase_2025
+JWT_SECRET = e06a8e5f-2620-4d62-9ff3-1b08fbf4cac0
+JWT_ACCESS_TTL = 15s
+JWT_REFRESH_TTL = 7d
+```
