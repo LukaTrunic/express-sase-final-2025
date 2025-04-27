@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import morgan from 'morgan'
-import { BookRoute } from './flight.route'
+import { BookRoute } from './book.route'
 
 const app = express()
 app.use(cors())
