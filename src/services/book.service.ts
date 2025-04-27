@@ -23,5 +23,15 @@ export class BookService {
     static async getBookById(id: number) {
         return await client.get(`/books/${id}`);
     }
+
+    // static async getBooksByIds(ids: number[]) {
+    //     return await client.request({
+    //         url: '/books',
+    //         method: 'post',
+    //         data: ids
+    //     });
+    // }
 }
+
+
 

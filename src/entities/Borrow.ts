@@ -19,23 +19,22 @@ export class Borrow {
   @Column("int", { name: "book_id", unsigned: true })
   bookId: number;
 
+  book: null | any
+
   @Column("int", { name: "author_id", unsigned: true })
   authorId: number;
 
   @Column("int", { name: "user_id", unsigned: true })
   userId: number;
 
-  @Column("tinyint", { name: "returned", unsigned: true })
-  returned: number;
-
   @Column("datetime", { name: "borrow_at" })
-  borrowAt: Date;
+  borrowAt: Date | null;
 
   @Column("datetime", { name: "due_at" })
-  dueAt: Date;
+  dueAt: Date | null;
 
   @Column("datetime", { name: "returned_at" })
-  returnedAt: Date;
+  returnedAt: Date | null;
 
   @Column("datetime", { name: "created_at" })
   createdAt: Date;

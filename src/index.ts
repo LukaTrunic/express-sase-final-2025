@@ -7,6 +7,7 @@ import { AppDataSource } from './db'
 import { AuthorRoute } from './routes/author.route'
 import { UserRoute } from './routes/user.route'
 import { UserService } from './services/user.service'
+import { BorrowRoute } from './routes/borrow.route'
 
 const app = express()
 app.use(express.json()) //olny accept json
@@ -17,6 +18,7 @@ app.use(UserService.verifyToken)
 app.use('/api/books', BookRoute)
 app.use('/api/author', AuthorRoute)
 app.use('/api/user', UserRoute)
+app.use('/api/borrow', BorrowRoute)
 
 // app.get('*', (req, res) => {
 //     res.status(404).json({
