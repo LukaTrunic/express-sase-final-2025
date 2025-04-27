@@ -20,3 +20,32 @@ AuthorRoute.get('/:id', async (req, res) => {
         sendError(res, e)
     }
 })
+
+AuthorRoute.post('/', async (req, res) => {
+    try {
+        await AuthorService.createAuthor(req.body)
+        res.status(204).send()
+    } catch(e) {
+        sendError(res, e)
+    }
+})
+
+AuthorRoute.put('/:id', async (req, res) => {
+    try {
+        const id = Number(req.params.id)
+        await AuthorService.updateAuthor(id, req.body)
+        res.status(204).send()
+    } catch(e) {
+        sendError(res, e)
+    }
+})
+
+AuthorRoute.delete('/:id', async (req, res) => {
+    try {
+        const id = Number(req.params.id)
+        await AuthorService.deleteAuthor(id)
+        res.status(204).send()
+    } catch(e) {
+        sendError(res, e)
+    }
+})
