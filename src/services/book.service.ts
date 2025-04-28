@@ -1,14 +1,14 @@
 import axios from "axios";
 
 const client = axios.create({
-    baseURL: "https://gutendex.com",
+    baseURL: 'https://gutendex.com',
     timeout: 12000,
     headers: {
         'Accept': 'application/json',
-        //'X-Name': 'The Library System' // you can check which frontend application is using your beckend application
+        'X-Name': 'The Library System'
     },
     validateStatus: (status: number) => {
-        return status >= 200 && status < 400;
+        return status >= 200; // && status < 400;
     }
 })
 

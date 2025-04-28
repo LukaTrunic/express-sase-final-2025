@@ -2,6 +2,7 @@ import { IsNull } from "typeorm";
 import { AppDataSource } from "../db";
 import { Borrow } from "../entities/Borrow";
 import { BookService } from "./book.service";
+import { AuthorService } from "./author.service";
 
 const repo = AppDataSource.getRepository(Borrow);
 
@@ -36,9 +37,9 @@ export class BorrowService {
         author: true,
       },
       order: {
-        returnedAt: 'asc',
-        dueAt: 'asc'
-      }
+        returnedAt: "asc",
+        dueAt: "asc",
+      },
     });
 
     const ids = data.map((borrow) => borrow.bookId); // Collect all IDs
@@ -63,7 +64,11 @@ export class BorrowService {
     return data;
   }
 
-  static async getBorrowById(user: number, id: number, includeBookObject = false) {
+  static async getBorrowById(
+    user: number,
+    id: number,
+    includeBookObject = false
+  ) {
     const data = await repo.findOne({
       where: {
         borrowId: id,
@@ -72,12 +77,12 @@ export class BorrowService {
       },
     });
 
-    if (data == undefined) 
-        throw new Error("BORROW_NOT_FOUND");
+    if (data == undefined) throw new Error("BORROW_NOT_FOUND");
 
-    if(includeBookObject) {
-        const rsp = await BookService.getBookById(data.bookId)
-        data.book = rsp.data
+    if (includeBookObject) {
+      const rsp = await BookService.getBookById(data.bookId);
+      data.book = rsp.data;
+      data.author = await AuthorService.getAuthorById(data.authorId);
     }
 
     return data;
@@ -100,29 +105,26 @@ export class BorrowService {
   static async updateBorrow(user: number, id: number, model: Borrow) {
     const borrow = await this.getBorrowById(user, id);
 
-    if (borrow.returnedAt != null)
-        throw new Error("BOOK_ALREADY_RETURNED")
+    if (borrow.returnedAt != null) throw new Error("BOOK_ALREADY_RETURNED");
 
-    borrow.bookId = model.bookId
-    borrow.authorId = model.authorId
-    borrow.updatedAt = new Date()
-    await repo.save(borrow)
+    borrow.bookId = model.bookId;
+    borrow.authorId = model.authorId;
+    borrow.updatedAt = new Date();
+    await repo.save(borrow);
   }
 
   static async makeBorrowReturned(user: number, id: number) {
     const borrow = await this.getBorrowById(user, id);
 
-    if (borrow.returnedAt != null)
-        throw new Error("BOOK_ALREADY_RETURNED")
+    if (borrow.returnedAt != null) throw new Error("BOOK_ALREADY_RETURNED");
 
-    borrow.returnedAt = new Date()
-    await repo.save(borrow)
-
+    borrow.returnedAt = new Date();
+    await repo.save(borrow);
   }
 
   static async deleteBorrow(user: number, id: number) {
     const borrow = await this.getBorrowById(user, id);
-    borrow.deletedAt = new Date()
-    await repo.save(borrow)
+    borrow.deletedAt = new Date();
+    await repo.save(borrow);
   }
 }

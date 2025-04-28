@@ -35,7 +35,11 @@ export class UserService {
 
   static async verifyToken(req: any, res: Response, next: Function) {
     // middleware
-    const whitelist = ['/api/user/login', '/api/user/refresh', '/api/user/register'];
+    const whitelist = [
+      "/api/user/login",
+      "/api/user/refresh",
+      "/api/user/register",
+    ];
 
     if (whitelist.includes(req.path)) {
       next();
@@ -85,19 +89,18 @@ export class UserService {
 
   static async register(model: RegisterModel) {
     const data = await repo.existsBy({
-        email: model.email,
-        deletedAt: IsNull()
+      email: model.email,
+      deletedAt: IsNull(),
     });
 
-    if(data)
-        throw new Error("USER_EXISTS")
+    if (data) throw new Error("USER_EXISTS");
 
-    const hashed = await bcryptjs.hash(model.password, 12)
+    const hashed = await bcryptjs.hash(model.password, 12);
     await repo.save({
-        email: model.email,
-        password: hashed,
-        name: model.name
-    })
+      email: model.email,
+      password: hashed,
+      name: model.name,
+    });
   }
 
   static async getUserByEmail(email: string) {
