@@ -40,7 +40,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'luka.trunic.21@singimail.rs','$2a$12$Z5oaoGcDLbTxhmBU8G9mn.Ty.jdAIThVCXiNZ8lsEa8E/jlaioV/O','Luka Trunic','2025-04-27 16:06:05',NULL,NULL),(2,'dusan.trunic.21@singimail.rs','#','Dusan Trunic','2025-04-27 23:23:52',NULL,NULL);
+INSERT INTO `user` VALUES (1,'luka.trunic.21@singimail.rs','$2a$2a$12$U5kXBsLpaE2ZrlnZbv2m4Ons9jjW..tqW7j3tx35Tze0FZcpS8k7e','Luka Trunic','2025-04-27 16:06:05',NULL,NULL),(2,'dusan.trunic.21@singimail.rs','#','Dusan Trunic','2025-04-27 23:23:52',NULL,NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-27 23:48:23
+-- Dump completed on 2025-04-28  7:49:03
