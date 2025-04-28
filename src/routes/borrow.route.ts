@@ -15,7 +15,7 @@ BorrowRoute.get('/', async (req: any, res) => {
 BorrowRoute.get('/:id', async (req: any, res) => {
     try {
         const id = Number(req.params.id)
-        res.json(await BorrowService.getBorrowById(req.user.id, id))
+        res.json(await BorrowService.getBorrowById(req.user.id, id, true))
     } catch (e) {
         sendError(res, e)
     }

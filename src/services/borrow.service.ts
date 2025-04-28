@@ -59,7 +59,7 @@ export class BorrowService {
     return data;
   }
 
-  static async getBorrowById(user: number, id: number) {
+  static async getBorrowById(user: number, id: number, includeBookObject = false) {
     const data = await repo.findOne({
       where: {
         borrowId: id,
@@ -70,6 +70,11 @@ export class BorrowService {
 
     if (data == undefined) 
         throw new Error("BORROW_NOT_FOUND");
+
+    if(includeBookObject) {
+        const rsp = await BookService.getBookById(data.bookId)
+        data.book = rsp.data
+    }
 
     return data;
   }
