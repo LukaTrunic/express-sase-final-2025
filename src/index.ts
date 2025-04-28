@@ -16,10 +16,10 @@ app.use(express.json()); //olny accept json
 app.use(cors());
 app.use(morgan("tiny"));
 
+app.use("/api/user", UserRoute);
 app.use(UserService.verifyToken);
 app.use("/api/books", BookRoute);
 app.use("/api/author", AuthorRoute);
-app.use("/api/user", UserRoute);
 app.use("/api/borrow", BorrowRoute);
 
 // app.get('*', (req, res) => {
