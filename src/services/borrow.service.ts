@@ -35,6 +35,10 @@ export class BorrowService {
       relations: {
         author: true,
       },
+      order: {
+        returnedAt: 'asc',
+        dueAt: 'asc'
+      }
     });
 
     const ids = data.map((borrow) => borrow.bookId); // Collect all IDs
