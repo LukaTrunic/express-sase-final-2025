@@ -48,3 +48,15 @@ AppDataSource.initialize()
     console.log("Database server connection failed");
     console.log(e);
   });
+
+// configDotenv()
+// AppDataSource.initialize()
+//     .then(() => {
+//         console.log('Connected to database')
+//         const port = process.env.SERVER_PORT || 3000
+//         app.listen(port, () => console.log(`Application started on port ${port}`))
+//     })
+//     .catch(e => {
+//         console.log('Failed to connect to the database')
+//         console.log(e)
+//     })
